@@ -16,9 +16,17 @@ import java.util.List;
 // <OptimoState, OptimoAction>
 public class OptimoMDP extends MDP<OptimoState, OptimoAction> {
 
+    List<List<String>> foodData;
+    List<String> articleClassList;
+
+    public OptimoMDP(List<String> articleClassListInput) {
+        articleClassList = articleClassListInput;
+    }
+
     public void printIO() {
         System.out.println("Optimo MDP");
         System.out.println(System.getProperty("user.dir") + "/python/data/sim_food.csv" );
+        System.out.println(articleClassList);
     }
 
     public void ingestGrocerySim() throws FileNotFoundException, IOException {
@@ -40,6 +48,7 @@ public class OptimoMDP extends MDP<OptimoState, OptimoAction> {
             }
         }
         System.out.println(ingestedData);
+        foodData = ingestedData;
     }
 
     @Override
@@ -54,6 +63,19 @@ public class OptimoMDP extends MDP<OptimoState, OptimoAction> {
 
     @Override
     public OptimoState initialState() {
+
+        // for
+        List<List<String>> goalFoodData = new ArrayList();
+
+        for (int i = 0; i < foodData.size(); i++) {
+            String articleClass = foodData.get(i).get(1);
+            if ( articleClassList.contains(articleClass )  ) {
+                List<String> filterList = foodData.get(i);
+                goalFoodData.add( filterList );
+            }
+        }
+        System.out.println(goalFoodData);
+
         return new OptimoState(0.0, 0.0, 0.0);
     }
 
