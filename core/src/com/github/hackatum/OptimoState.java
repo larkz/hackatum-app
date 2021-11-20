@@ -1,13 +1,17 @@
 package com.github.hackatum;
 
 public class OptimoState {
-    double price;
     double weight;
+    double price;
+    double calories;
+    double health;
     double co2;
 
-    public OptimoState(double priceInput, double weightInput, double co2Input) {
-        price = priceInput;
+    public OptimoState(double weightInput, double priceInput, double caloriesInput, double healthInput, double co2Input) {
         weight = weightInput;
+        price = priceInput;
+        calories = caloriesInput;
+        health = healthInput;
         co2 = co2Input;
     }
 

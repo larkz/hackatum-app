@@ -53,7 +53,7 @@ public class OptimoMDP extends MDP<OptimoState, OptimoAction> {
 
     @Override
     public OptimoState transition(OptimoState state, OptimoAction action) {
-        return new OptimoState(5.0, 6.0, 1.1);
+        return new OptimoState(5.0, 6.0, 1.1, 0.0, 0.0);
     }
 
     @Override
@@ -76,7 +76,7 @@ public class OptimoMDP extends MDP<OptimoState, OptimoAction> {
         }
         System.out.println(goalFoodData);
 
-        return new OptimoState(0.0, 0.0, 0.0);
+        return new OptimoState(0.0, 0.0, 0.0, 0.0, 0.0);
     }
 
     @Override
