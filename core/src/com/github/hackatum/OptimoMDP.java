@@ -18,11 +18,31 @@ public class OptimoMDP extends MDP<OptimoState, OptimoAction> {
 
     List<List<String>> foodData;
     List<String> articleClassList;
+    List<OptimoAction> possibleActions;
+    List<List<String>> goalFoodData;
     Double weightMax;
     Double priceMax;
 
-    public OptimoMDP(List<String> articleClassListInput) {
+    public OptimoMDP(List<String> articleClassListInput, Double weightMaxInput, Double priceMaxInput) throws IOException {
+        ingestGrocerySim();
         articleClassList = articleClassListInput;
+        weightMax = weightMaxInput;
+        priceMax = priceMaxInput;
+
+        possibleActions = new ArrayList();
+        goalFoodData = new ArrayList();
+
+        for (int i = 0; i < foodData.size(); i++) {
+            String articleClass = foodData.get(i).get(1);
+            if ( articleClassList.contains(articleClass )  ) {
+                List<String> filterList = foodData.get(i);
+                goalFoodData.add( filterList );
+                possibleActions.add( new OptimoAction(foodData.get(i).get(2) ) );
+                // System.out.println(foodData.get(i).get(2));
+            }
+        }
+        System.out.println(goalFoodData.size());
+
     }
 
     public void printIO() {
@@ -44,45 +64,40 @@ public class OptimoMDP extends MDP<OptimoState, OptimoAction> {
         while ((nextLine = reader.readNext()) != null) {
             if (nextLine != null) {
                 //Verifying the read data here
-                // System.out.println(Arrays.toString(nextLine));
                 String commaSepString = Arrays.toString( nextLine).replace("[","").replace("]","").replace(" ","");
                 ingestedData.add( Arrays.asList(commaSepString.split(",")));
             }
         }
-        System.out.println(ingestedData);
         foodData = ingestedData;
     }
 
     @Override
     public OptimoState transition(OptimoState state, OptimoAction action) {
+
+        double newWeight;
+        double newPrice;
+        double newCalories;
+        double newHealth;
+        double newCo2;
+
+
         return new OptimoState(5.0, 6.0, 1.1, 0.0, 0.0);
     }
 
     @Override
     public double reward(OptimoState previousState, OptimoAction action, OptimoState state) {
-        return 5.0;
+        return - state.co2;
     }
 
     @Override
     public OptimoState initialState() {
-
-        // for
-        List<List<String>> goalFoodData = new ArrayList();
-
-        for (int i = 0; i < foodData.size(); i++) {
-            String articleClass = foodData.get(i).get(1);
-            if ( articleClassList.contains(articleClass )  ) {
-                List<String> filterList = foodData.get(i);
-                goalFoodData.add( filterList );
-            }
-        }
-        System.out.println(goalFoodData);
+        // System.out.println(goalFoodData);
         return new OptimoState(0.0, 0.0, 0.0, 0.0, 0.0);
     }
 
     @Override
     public boolean isTerminal(OptimoState state) {
-        if (state.weight <= weightMax && state.price <= priceMax){
+        if (state.weight <= weightMax && state.price <= priceMax && state.calories > 1100){
             return false;
         } else {
             return true;
@@ -91,11 +106,8 @@ public class OptimoMDP extends MDP<OptimoState, OptimoAction> {
 
     @Override
     public Collection<OptimoAction> actions(OptimoState state) {
-        ArrayList<OptimoAction> actionsAvail = new ArrayList<OptimoAction>();
-
-
-        actionsAvail.add(new OptimoAction("Apple1"));
-
-        return actionsAvail;
+        // List<OptimoAction> actionsAvail = possibleActions;
+        // actionsAvail.add(new OptimoAction("Apple1"));
+        return possibleActions;
     }
 }

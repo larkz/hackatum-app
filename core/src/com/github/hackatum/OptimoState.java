@@ -14,5 +14,4 @@ public class OptimoState {
         health = healthInput;
         co2 = co2Input;
     }
-
 }

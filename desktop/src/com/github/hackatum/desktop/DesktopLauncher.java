@@ -13,10 +13,11 @@ import java.io.IOException;
 public class DesktopLauncher {
 	public static void main (String[] arg) throws IOException {
 		List<String> articleClassListInput = Arrays.asList("Barley", "Apples");
-		OptimoMDP OM = new OptimoMDP(articleClassListInput);
-		OM.printIO();
+		OptimoMDP OM = new OptimoMDP(articleClassListInput, 500.0, 30000.0);
+		// OM.printIO();
 		OM.ingestGrocerySim();
 		OM.initialState();
+		// System.out.println(OM.actions(OM.initialState()));
 
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
 		new LwjglApplication(new Optimo(), config);
