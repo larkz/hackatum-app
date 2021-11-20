@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.github.hackatum.Optimo;
+import com.github.hackatum.resources.GreenScore;
 import com.github.hackatum.resources.ShoppingList;
 
 public class MainScreen extends ScreenAdapter {
@@ -27,14 +28,6 @@ public class MainScreen extends ScreenAdapter {
     private static final float PLAYBUTTON_X2 = PLAYBUTTON_X1 + PLAYBUTTON_WIDTH;
     private static final float PLAYBUTTON_Y2 = PLAYBUTTON_Y1 + PLAYBUTTON_HEIGHT;
 
-    //--Shopping list button
-    private static final float LISTBUTTON_WIDTH = 299;
-    private static final float LISTBUTTON_HEIGHT = 65;
-    private static final float LISTBUTTON_X1 = 350;
-    private static final float LISTBUTTON_Y1 = 130;
-    private static final float LISTBUTTON_X2 = LISTBUTTON_X1 + LISTBUTTON_WIDTH;
-    private static final float LISTBUTTON_Y2 = LISTBUTTON_Y1 + LISTBUTTON_HEIGHT;
-
     //--Running Avatar
     private static final int AVATAR_FRAME_COLS = 4;
     private static final int AVATAR_FRAME_ROWS = 3;
@@ -46,25 +39,24 @@ public class MainScreen extends ScreenAdapter {
 
     private final Optimo game;
 
-
     private final Texture supermarketImg;
     private final Texture playButtonImg;
-    private final Texture listButtonImg;
+    private final ShoppingList shoppingList;
+    private final GreenScore greenScore;
+
     private Animation<TextureRegion> avatarRunningAnimation;
-
-    private ShoppingList shoppingList;
-
     private float stateTime;
 
-    public MainScreen(Optimo game, ShoppingList shoppingList) {
+    public MainScreen(Optimo game, ShoppingList shoppingList, GreenScore greenScore) {
         this.game = game;
 
-        supermarketImg = new Texture(Gdx.files.local("core/assets/supermarket.png"));
-        playButtonImg = new Texture(Gdx.files.local("core/assets/StartButton.png"));
-        listButtonImg = new Texture(Gdx.files.local("core/assets/ShoppingList.png"));
-        initializeAvatarAnimation();
+        supermarketImg = new Texture(Gdx.files.internal("Supermarket.png"));
+        playButtonImg = new Texture(Gdx.files.internal("StartButton.png"));
 
         this.shoppingList = shoppingList;
+        this.greenScore = greenScore;
+
+        initializeAvatarAnimation();
 
         stateTime = 0.0f;
     }
@@ -76,10 +68,7 @@ public class MainScreen extends ScreenAdapter {
             public boolean touchDown(int x, int y, int pointer, int button) {
                 int renderY = Gdx.graphics.getHeight() - y;
                 if (x > PLAYBUTTON_X1 && x < PLAYBUTTON_X2 && renderY > PLAYBUTTON_Y1 && renderY < PLAYBUTTON_Y2) {
-                    //check if shopping list is empty
-                    //go to a page with maybe a bar code scanner?
-                } else if (x > LISTBUTTON_X1 && x < LISTBUTTON_X2 && renderY > LISTBUTTON_Y1 && renderY < LISTBUTTON_Y2) {
-                    game.setScreen(new ShoppingListScreen(game));
+                    game.setScreen(new ShoppingListScreen(game, shoppingList, greenScore));
                 }
                 return true;
             }
@@ -94,11 +83,11 @@ public class MainScreen extends ScreenAdapter {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         game.getBatch().begin();
+        greenScore.render(game.getBatch());
         TextureRegion avatarCurrentFrame = avatarRunningAnimation.getKeyFrame(stateTime, true);
         game.getBatch().draw(avatarCurrentFrame, AVATAR_X, AVATAR_Y, AVATAR_WIDTH, AVATAR_HEIGHT);
         game.getBatch().draw(supermarketImg, SUPERMARKET_X, SUPERMARKET_Y, SUPERMARKET_WIDTH, SUPERMARKET_HEIGHT);
         game.getBatch().draw(playButtonImg, PLAYBUTTON_X1, PLAYBUTTON_Y1, PLAYBUTTON_WIDTH, PLAYBUTTON_HEIGHT);
-        game.getBatch().draw(listButtonImg, LISTBUTTON_X1, LISTBUTTON_Y1, LISTBUTTON_WIDTH, LISTBUTTON_HEIGHT);
         game.getBatch().end();
     }
 
@@ -107,9 +96,14 @@ public class MainScreen extends ScreenAdapter {
         Gdx.input.setInputProcessor(null);
     }
 
+    @Override
+    public void dispose() {
+        greenScore.dispose();
+    }
+
     private void initializeAvatarAnimation() {
         // load the avatar sprite sheet as a Texture
-        Texture avatarRunningSheet = new Texture(Gdx.files.internal("core/assets/spritesheet_avatar.png"));
+        Texture avatarRunningSheet = new Texture(Gdx.files.internal("SpriteSheetAvatar.png"));
 
         // Use the split utility method to create a 2D array of TextureRegions. This is
         // possible because this sprite sheet contains frames of equal size and they are
