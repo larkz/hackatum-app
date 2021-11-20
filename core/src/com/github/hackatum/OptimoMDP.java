@@ -10,7 +10,8 @@ import java.io.FileReader;
 import java.io.File;
 import au.com.bytecode.opencsv.CSVReader;
 import java.util.Arrays;
-
+import java.util.Arrays;
+import java.util.List;
 
 // <OptimoState, OptimoAction>
 public class OptimoMDP extends MDP<OptimoState, OptimoAction> {
@@ -26,17 +27,20 @@ public class OptimoMDP extends MDP<OptimoState, OptimoAction> {
         FileReader fr = new FileReader(filePath);
         CSVReader reader = new CSVReader(fr, ',' , '"' , 1);
 
+        List<List<String>> ingestedData = new ArrayList<>();
+
         //Read CSV line by line and use the string array as you want
         String[] nextLine;
         while ((nextLine = reader.readNext()) != null) {
             if (nextLine != null) {
                 //Verifying the read data here
-                System.out.println(Arrays.toString(nextLine));
+                // System.out.println(Arrays.toString(nextLine));
+                String commaSepString = Arrays.toString( nextLine).replace("[","").replace("]","").replace(" ","");
+                ingestedData.add( Arrays.asList(commaSepString.split(",")));
             }
         }
+        System.out.println(ingestedData);
     }
-
-
 
     @Override
     public OptimoState transition(OptimoState state, OptimoAction action) {
