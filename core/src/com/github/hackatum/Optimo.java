@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.github.hackatum.Screens.MainScreen;
+import com.github.hackatum.resources.ShoppingList;
 
 public class Optimo extends Game {
 
@@ -17,7 +18,8 @@ public class Optimo extends Game {
         batch = new SpriteBatch();
         shapeRenderer = new ShapeRenderer();
         font = new BitmapFont();
-        setScreen(new MainScreen(this));
+        ShoppingList shoppingList = new ShoppingList(); //Storing a shoppingList locally might be too much for this project
+        setScreen(new MainScreen(this, shoppingList));
     }
 
     @Override

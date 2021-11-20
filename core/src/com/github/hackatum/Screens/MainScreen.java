@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.github.hackatum.Optimo;
+import com.github.hackatum.resources.ShoppingList;
 
 public class MainScreen extends ScreenAdapter {
 
@@ -16,7 +17,7 @@ public class MainScreen extends ScreenAdapter {
     private static final float SUPERMARKET_WIDTH = 279;
     private static final float SUPERMARKET_HEIGHT = 135;
     private static final float SUPERMARKET_X = 800;
-    private static final float SUPERMARKET_Y = 150;
+    private static final float SUPERMARKET_Y = 130;
 
     //--Play button
     private static final float PLAYBUTTON_WIDTH = 476;
@@ -51,14 +52,20 @@ public class MainScreen extends ScreenAdapter {
     private final Texture listButtonImg;
     private Animation<TextureRegion> avatarRunningAnimation;
 
+    private ShoppingList shoppingList;
+
     private float stateTime;
 
-    public MainScreen(Optimo game) {
+    public MainScreen(Optimo game, ShoppingList shoppingList) {
         this.game = game;
+
         supermarketImg = new Texture(Gdx.files.local("core/assets/supermarket.png"));
         playButtonImg = new Texture(Gdx.files.local("core/assets/StartButton.png"));
         listButtonImg = new Texture(Gdx.files.local("core/assets/ShoppingList.png"));
         initializeAvatarAnimation();
+
+        this.shoppingList = shoppingList;
+
         stateTime = 0.0f;
     }
 
@@ -69,8 +76,9 @@ public class MainScreen extends ScreenAdapter {
             public boolean touchDown(int x, int y, int pointer, int button) {
                 int renderY = Gdx.graphics.getHeight() - y;
                 if (x > PLAYBUTTON_X1 && x < PLAYBUTTON_X2 && renderY > PLAYBUTTON_Y1 && renderY < PLAYBUTTON_Y2) {
-                    // go to a page with maybe a bar code scanner?
-                } else if (x > LISTBUTTON_X1 && x < LISTBUTTON_Y1 && renderY > LISTBUTTON_X2 && renderY < LISTBUTTON_Y2) {
+                    //check if shopping list is empty
+                    //go to a page with maybe a bar code scanner?
+                } else if (x > LISTBUTTON_X1 && x < LISTBUTTON_X2 && renderY > LISTBUTTON_Y1 && renderY < LISTBUTTON_Y2) {
                     game.setScreen(new ShoppingListScreen(game));
                 }
                 return true;
