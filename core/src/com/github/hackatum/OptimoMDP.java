@@ -2,15 +2,41 @@ package com.github.hackatum;
 import ca.aqtech.mctreesearch4j.MDP;
 import com.sun.org.apache.xpath.internal.operations.Bool;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.io.FileReader;
+import java.io.File;
+import au.com.bytecode.opencsv.CSVReader;
+import java.util.Arrays;
+
 
 // <OptimoState, OptimoAction>
 public class OptimoMDP extends MDP<OptimoState, OptimoAction> {
 
     public void printIO() {
-        System.out.print("Optimo MDP");
+        System.out.println("Optimo MDP");
+        System.out.println(System.getProperty("user.dir") + "/python/data/sim_food.csv" );
     }
+
+    public void ingestGrocerySim() throws FileNotFoundException, IOException {
+
+        String filePath = System.getProperty("user.dir") + "/python/data/sim_food.csv" ;
+        FileReader fr = new FileReader(filePath);
+        CSVReader reader = new CSVReader(fr, ',' , '"' , 1);
+
+        //Read CSV line by line and use the string array as you want
+        String[] nextLine;
+        while ((nextLine = reader.readNext()) != null) {
+            if (nextLine != null) {
+                //Verifying the read data here
+                System.out.println(Arrays.toString(nextLine));
+            }
+        }
+    }
+
+
 
     @Override
     public OptimoState transition(OptimoState state, OptimoAction action) {
