@@ -41,7 +41,7 @@ public class OptimoMDP extends MDP<OptimoState, OptimoAction> {
                 // System.out.println(foodData.get(i).get(2));
             }
         }
-        System.out.println(goalFoodData.size());
+        // System.out.println(goalFoodData.size());
 
     }
 
@@ -74,14 +74,30 @@ public class OptimoMDP extends MDP<OptimoState, OptimoAction> {
     @Override
     public OptimoState transition(OptimoState state, OptimoAction action) {
 
-        double newWeight;
-        double newPrice;
-        double newCalories;
-        double newHealth;
-        double newCo2;
+        double weightDelta = 0.0;
+        double priceDelta = 0.0;
+        double caloriesDelta = 0.0;
+        double healthDelta = 0.0;
+        double co2Delta = 0.0;
 
+        for (int i = 0; i < goalFoodData.size(); i++) {
+            List<String> foodData = goalFoodData.get(i);
+            if (action.article == foodData.get(2) ){
+                weightDelta = Double.parseDouble(foodData.get(3));
+                priceDelta = Double.parseDouble(foodData.get(4));
+                caloriesDelta = Double.parseDouble(foodData.get(5));
+                healthDelta = Double.parseDouble(foodData.get(6));
+                co2Delta = Double.parseDouble(foodData.get(7));
+            }
+        }
 
-        return new OptimoState(5.0, 6.0, 1.1, 0.0, 0.0);
+        double newWeight = state.weight + weightDelta;
+        double newPrice = state.price + priceDelta;
+        double newCalories = state.calories + caloriesDelta;
+        double newHealth = state.health + healthDelta;
+        double newCo2 = state.co2 + co2Delta;
+
+        return new OptimoState(newWeight, newPrice, newCalories, newHealth, newCo2);
     }
 
     @Override
