@@ -18,6 +18,8 @@ public class OptimoMDP extends MDP<OptimoState, OptimoAction> {
 
     List<List<String>> foodData;
     List<String> articleClassList;
+    Double weightMax;
+    Double priceMax;
 
     public OptimoMDP(List<String> articleClassListInput) {
         articleClassList = articleClassListInput;
@@ -75,19 +77,25 @@ public class OptimoMDP extends MDP<OptimoState, OptimoAction> {
             }
         }
         System.out.println(goalFoodData);
-
         return new OptimoState(0.0, 0.0, 0.0, 0.0, 0.0);
     }
 
     @Override
     public boolean isTerminal(OptimoState state) {
-        return false;
+        if (state.weight <= weightMax && state.price <= priceMax){
+            return false;
+        } else {
+            return true;
+        }
     }
 
     @Override
     public Collection<OptimoAction> actions(OptimoState state) {
         ArrayList<OptimoAction> actionsAvail = new ArrayList<OptimoAction>();
+
+
         actionsAvail.add(new OptimoAction("Apple1"));
+
         return actionsAvail;
     }
 }
