@@ -13,9 +13,9 @@ public class ShoppingList extends ArrayList<String> {
 
     @Override
     public boolean add(String s) {
-        if (!items.contains(s)) {
-            return false;
-        }
+//        if (!items.contains(s)) {
+//            return false;
+//        }
         return super.add(s);
     }
 }

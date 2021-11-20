@@ -5,8 +5,11 @@ import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.List;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.TextField;
+import com.badlogic.gdx.utils.Align;
 import com.github.hackatum.Optimo;
 import com.github.hackatum.resources.GreenScore;
 import com.github.hackatum.resources.ShoppingList;
@@ -27,15 +30,20 @@ public class ShoppingListScreen extends ScreenAdapter {
     private final Texture backArrowImg;
 
     private final List<String> list;
+    private Skin uiSkin;
 
     public ShoppingListScreen(Optimo game, ShoppingList shoppingList, GreenScore greenScore) {
         this.game = game;
         this.shoppingList = shoppingList;
         this.greenScore = greenScore;
 
+        //for testing
+        shoppingList.add("test1");shoppingList.add("test2");shoppingList.add("test3");shoppingList.add("test4");shoppingList.add("test5");
+
         backArrowImg = new Texture(Gdx.files.internal("BackArrow.png"));
 
-        Skin uiSkin = new Skin(Gdx.files.internal("uiskin.json"));
+        uiSkin = new Skin(Gdx.files.internal("glassy-ui.json"));
+
         list = new List<>(uiSkin);
     }
 
@@ -61,8 +69,20 @@ public class ShoppingListScreen extends ScreenAdapter {
         game.getBatch().begin();
         greenScore.render(game.getBatch());
         game.getBatch().draw(backArrowImg, BACK_ARROW_X1, BACK_ARROW_Y1, BACK_ARROW_WIDTH, BACK_ARROW_HEIGHT);
-        list.setItems("test1", "test7", "test6", "test5", "test4", "test3", "test2");
-        list.draw(game.getBatch(), 20);
+        list.setItems("test1", "test2", "test3", "test4");
+        list.setPosition(500, 200);
+        list.setSize(100, 300);
+        list.draw(game.getBatch(), 1);
+//        renderShoppingList();
         game.getBatch().end();
+    }
+
+    private void renderShoppingList() {
+        int x = 100;
+        int y = 0;
+        for (String s : shoppingList) {
+            game.getFont().draw(game.getBatch(), s, x, y);
+            y += 20;
+        }
     }
 }
