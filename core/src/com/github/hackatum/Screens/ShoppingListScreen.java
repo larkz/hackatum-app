@@ -47,13 +47,6 @@ public class ShoppingListScreen extends ScreenAdapter {
         this.shoppingList = shoppingList;
         this.greenScore = greenScore;
 
-        //for testing
-        shoppingList.add("test1");
-        shoppingList.add("test2");
-        shoppingList.add("test3");
-        shoppingList.add("test4");
-        shoppingList.add("test5");
-
         backArrowImg = new Texture(Gdx.files.internal("BackArrow.png"));
         addElementImg = new Texture(Gdx.files.internal("AddElement.png"));
 
@@ -72,6 +65,7 @@ public class ShoppingListScreen extends ScreenAdapter {
                     game.setScreen(new MainScreen(game, shoppingList, greenScore));
                 } else if (x > PLUS_X1 && x < PLUS_X2 && renderY > PLUS_Y1 && renderY < PLUS_Y2) {
                     // add element to table
+                    shoppingList.add("test");
                 }
                 return true;
             }
@@ -97,8 +91,8 @@ public class ShoppingListScreen extends ScreenAdapter {
             listShopping[i] = shoppingList.get(i);
         }
         list.setItems(listShopping);
-        list.setPosition(300, 30);
-        list.setSize(200, 400);
+        list.setPosition(300, 425 - 23 * list.getItems().size);
+        list.setSize(200, 23 * list.getItems().size);
         list.draw(game.getBatch(), 1);
     }
 }
