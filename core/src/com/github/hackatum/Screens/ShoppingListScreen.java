@@ -56,13 +56,6 @@ public class ShoppingListScreen extends ScreenAdapter {
         this.shoppingList = shoppingList;
         this.greenScore = greenScore;
 
-        //for testing
-        shoppingList.add("test1");
-        shoppingList.add("test2");
-        shoppingList.add("test3");
-        shoppingList.add("test4");
-        shoppingList.add("test5");
-
         backArrowImg = new Texture(Gdx.files.internal("BackArrow.png"));
         addElementImg = new Texture(Gdx.files.internal("AddElement.png"));
 
@@ -82,7 +75,7 @@ public class ShoppingListScreen extends ScreenAdapter {
                 if (x > BACK_ARROW_X1 && x < BACK_ARROW_X2 && renderY > BACK_ARROW_Y1 && renderY < BACK_ARROW_Y2) {
                     game.setScreen(new MainScreen(game, shoppingList, greenScore));
                 } else if (x > PLUS_X1 && x < PLUS_X2 && renderY > PLUS_Y1 && renderY < PLUS_Y2) {
-                    // add element to list
+                    shoppingList.add(addElementTextField.getText());
                 }
                 return true;
             }
@@ -93,6 +86,8 @@ public class ShoppingListScreen extends ScreenAdapter {
                     addElementTextField.appendText(Input.Keys.toString(keycode));
                 } else if (keycode == 62) {
                     addElementTextField.appendText(" ");
+                } else if (keycode == 67) {
+                    addElementTextField.setText("");
                 }
                 return true;
             }
