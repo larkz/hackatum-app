@@ -5,17 +5,16 @@ import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.List;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.scenes.scene2d.ui.TextField;
-import com.badlogic.gdx.utils.Align;
 import com.github.hackatum.Optimo;
 import com.github.hackatum.resources.GreenScore;
 import com.github.hackatum.resources.ShoppingList;
 
 public class ShoppingListScreen extends ScreenAdapter {
 
+    //Dimensions
+    //--Back arrow
     private static final float BACK_ARROW_WIDTH = 81;
     private static final float BACK_ARROW_HEIGHT = 57;
     private static final float BACK_ARROW_X1 = 50;
@@ -23,14 +22,25 @@ public class ShoppingListScreen extends ScreenAdapter {
     private static final float BACK_ARROW_X2 = BACK_ARROW_X1 + BACK_ARROW_WIDTH;
     private static final float BACK_ARROW_Y2 = BACK_ARROW_Y1 + BACK_ARROW_HEIGHT;
 
+    //--Add element to table
+    private static final float PLUS_WIDTH = 81;
+    private static final float PLUS_HEIGHT = 57;
+    private static final float PLUS_X1 = 550;
+    private static final float PLUS_Y1 = 375;
+    private static final float PLUS_X2 = PLUS_X1 + PLUS_WIDTH;
+    private static final float PLUS_Y2 = PLUS_Y1 + PLUS_HEIGHT;
+
     private final Optimo game;
     private final ShoppingList shoppingList;
     private final GreenScore greenScore;
 
     private final Texture backArrowImg;
+    private final Texture addElementImg;
+
+    private final Skin uiSkin;
 
     private final List<String> list;
-    private Skin uiSkin;
+
 
     public ShoppingListScreen(Optimo game, ShoppingList shoppingList, GreenScore greenScore) {
         this.game = game;
@@ -38,9 +48,14 @@ public class ShoppingListScreen extends ScreenAdapter {
         this.greenScore = greenScore;
 
         //for testing
-        shoppingList.add("test1");shoppingList.add("test2");shoppingList.add("test3");shoppingList.add("test4");shoppingList.add("test5");
+        shoppingList.add("test1");
+        shoppingList.add("test2");
+        shoppingList.add("test3");
+        shoppingList.add("test4");
+        shoppingList.add("test5");
 
         backArrowImg = new Texture(Gdx.files.internal("BackArrow.png"));
+        addElementImg = new Texture(Gdx.files.internal("AddElement.png"));
 
         uiSkin = new Skin(Gdx.files.internal("glassy-ui.json"));
 
@@ -55,6 +70,8 @@ public class ShoppingListScreen extends ScreenAdapter {
                 int renderY = Gdx.graphics.getHeight() - y;
                 if (x > BACK_ARROW_X1 && x < BACK_ARROW_X2 && renderY > BACK_ARROW_Y1 && renderY < BACK_ARROW_Y2) {
                     game.setScreen(new MainScreen(game, shoppingList, greenScore));
+                } else if (x > PLUS_X1 && x < PLUS_X2 && renderY > PLUS_Y1 && renderY < PLUS_Y2) {
+                    // add element to table
                 }
                 return true;
             }
@@ -69,20 +86,19 @@ public class ShoppingListScreen extends ScreenAdapter {
         game.getBatch().begin();
         greenScore.render(game.getBatch());
         game.getBatch().draw(backArrowImg, BACK_ARROW_X1, BACK_ARROW_Y1, BACK_ARROW_WIDTH, BACK_ARROW_HEIGHT);
-        list.setItems("test1", "test2", "test3", "test4");
-        list.setPosition(500, 200);
-        list.setSize(100, 300);
-        list.draw(game.getBatch(), 1);
-//        renderShoppingList();
+        game.getBatch().draw(addElementImg, PLUS_X1, PLUS_Y1, PLUS_WIDTH, PLUS_HEIGHT);
+        renderShoppingList();
         game.getBatch().end();
     }
 
     private void renderShoppingList() {
-        int x = 100;
-        int y = 0;
-        for (String s : shoppingList) {
-            game.getFont().draw(game.getBatch(), s, x, y);
-            y += 20;
+        String[] listShopping = new String[shoppingList.size()];
+        for (int i = 0; i < listShopping.length; i++) {
+            listShopping[i] = shoppingList.get(i);
         }
+        list.setItems(listShopping);
+        list.setPosition(300, 30);
+        list.setSize(200, 400);
+        list.draw(game.getBatch(), 1);
     }
 }

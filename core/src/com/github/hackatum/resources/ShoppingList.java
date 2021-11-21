@@ -11,11 +11,11 @@ public class ShoppingList extends ArrayList<String> {
         // generate set of item classes to choose from
     }
 
-    @Override
-    public boolean add(String s) {
+//    @Override
+//    public boolean add(String s) {
 //        if (!items.contains(s)) {
 //            return false;
 //        }
-        return super.add(s);
-    }
+//        return super.add(s);
+//    }
 }
