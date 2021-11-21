@@ -16,7 +16,7 @@ public class DesktopLauncher {
 		OptimoGenerator og = new OptimoGenerator(Arrays.asList("Barley", "Apples", "Bananas"),500.0, 30000.0);
 		og.run();
 
-		// LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
-		// new LwjglApplication(new Optimo(), config);
+		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
+		new LwjglApplication(new Optimo(), config);
 	}
 }
