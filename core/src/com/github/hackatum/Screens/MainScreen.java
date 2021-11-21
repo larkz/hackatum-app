@@ -7,7 +7,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.github.hackatum.Optimo;
+import com.github.hackatum.Optimo.Optimo;
 import com.github.hackatum.resources.GreenScore;
 import com.github.hackatum.resources.ShoppingList;
 

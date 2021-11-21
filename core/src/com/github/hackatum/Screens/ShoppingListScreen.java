@@ -9,7 +9,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.ui.List;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
-import com.github.hackatum.Optimo;
+import com.github.hackatum.Optimo.Optimo;
 import com.github.hackatum.resources.GreenScore;
 import com.github.hackatum.resources.ShoppingList;
 
@@ -120,8 +120,8 @@ public class ShoppingListScreen extends ScreenAdapter {
             listShopping[i] = shoppingList.get(i);
         }
         list.setItems(listShopping);
-        list.setPosition(300, 30);
-        list.setSize(200, 400);
+        list.setPosition(300, 425 - 23 * list.getItems().size);
+        list.setSize(200, 23 * list.getItems().size);
         list.draw(game.getBatch(), 1);
     }
 

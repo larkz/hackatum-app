@@ -1,4 +1,4 @@
-package com.github.hackatum;
+package com.github.hackatum.Optimo;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;

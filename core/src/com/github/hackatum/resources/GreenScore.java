@@ -2,7 +2,7 @@ package com.github.hackatum.resources;
 
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.github.hackatum.Optimo;
+import com.github.hackatum.Optimo.Optimo;
 
 
 public class GreenScore {
