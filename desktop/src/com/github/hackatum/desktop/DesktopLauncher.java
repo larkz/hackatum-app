@@ -11,9 +11,7 @@ import java.util.Arrays;
 
 public class DesktopLauncher {
 
-    public static void main(String[] arg) throws IOException {
-        OptimoGenerator og = new OptimoGenerator(Arrays.asList("Barley", "Apples", "Bananas"), 500.0, 30000.0);
-        og.run();
+    public static void main(String[] arg) {
         LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
 //        config.title = "Óptimo";
         config.resizable = false;

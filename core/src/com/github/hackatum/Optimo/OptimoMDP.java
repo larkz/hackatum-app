@@ -6,10 +6,9 @@ import ca.aqtech.mctreesearch4j.MDP;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.List;
+import java.nio.file.Paths;
+import java.util.*;
+import java.util.stream.Collectors;
 
 // <OptimoState, OptimoAction>
 public class OptimoMDP extends MDP<OptimoState, OptimoAction> {
@@ -24,7 +23,10 @@ public class OptimoMDP extends MDP<OptimoState, OptimoAction> {
 
     public OptimoMDP(List<String> articleClassListInput, Double weightMaxInput, Double priceMaxInput) throws IOException {
         ingestGrocerySim();
-        articleClassList = articleClassListInput;
+        articleClassList = new ArrayList<>();
+        for (String articleClassListVal : articleClassListInput) {
+            articleClassList.add(articleClassListVal.toLowerCase());
+        }
         weightMax = weightMaxInput;
         priceMax = priceMaxInput;
 
@@ -33,7 +35,7 @@ public class OptimoMDP extends MDP<OptimoState, OptimoAction> {
 
         for (int i = 0; i < foodData.size(); i++) {
             String articleClass = foodData.get(i).get(1);
-            if (articleClassList.contains(articleClass)) {
+            if (articleClassList.contains(articleClass.toLowerCase())) {
                 List<String> filterList = foodData.get(i);
                 goalFoodData.add(filterList);
                 possibleActions.add(new OptimoAction(foodData.get(i).get(2)));
@@ -52,7 +54,9 @@ public class OptimoMDP extends MDP<OptimoState, OptimoAction> {
 
     public void ingestGrocerySim() throws FileNotFoundException, IOException {
 
-        String filePath = System.getProperty("user.dir") + "/python/data/sim_food.csv";
+        String filePath = Paths.get(System.getProperty("user.dir"), "..", "..", "python", "data", "sim_food.csv").toString();
+        System.out.println(filePath);
+
         FileReader fr = new FileReader(filePath);
         CSVReader reader = new CSVReader(fr, ',', '"', 1);
 

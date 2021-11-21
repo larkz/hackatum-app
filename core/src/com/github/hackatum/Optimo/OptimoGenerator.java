@@ -3,8 +3,7 @@ package com.github.hackatum.Optimo;
 import ca.aqtech.mctreesearch4j.GenericSolver;
 
 import java.io.*;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 public class OptimoGenerator {
 
@@ -18,8 +17,7 @@ public class OptimoGenerator {
         priceMax = priceMaxInput;
     }
 
-    public void run() throws IOException {
-        List<String> articleClassListInput = Arrays.asList("Barley", "Apples");
+    public String run() throws IOException {
         OptimoMDP OM = new OptimoMDP(articleClasses, weightMax, priceMax);
         // OM.printIO();
         OM.ingestGrocerySim();
@@ -38,9 +36,29 @@ public class OptimoGenerator {
         System.out.println("-------");
 
         String[] stdoutStr = boas.toString().split("\n");
-        System.out.println(stdoutStr[stdoutStr.length - 2]);
 
         String outputStr = stdoutStr[stdoutStr.length - 2];
+
+        solver.displayTree(29);
+        System.out.println(stdoutStr[stdoutStr.length - 2]);
+        return outputStr;
+    }
+
+    public List<Map<String, String>> parseOutput(String outputStr) {
+        outputStr = outputStr.substring(3);
+        List<Map<String, String>> parsedOutput = new ArrayList<>();
+        String[] elements = outputStr.split(" -> ");
+        for (int i = 0; i < elements.length - 1; i += 2) {
+            Map<String, String> row = new HashMap<>();
+            row.put("brand", elements[i]);
+            String[] values = elements[i+1].split(" ");
+            for (String param:values) {
+                String[] fvPair = param.split("\\|");
+                row.put(fvPair[0], String.format("%.2f", Float.parseFloat(fvPair[1])));
+            }
+            parsedOutput.add(row);
+        }
+        return parsedOutput;
     }
 
 
