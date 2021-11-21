@@ -1,4 +1,4 @@
-package com.github.hackatum;
+package com.github.hackatum.Optimo;
 
 public class OptimoState {
     double weight;

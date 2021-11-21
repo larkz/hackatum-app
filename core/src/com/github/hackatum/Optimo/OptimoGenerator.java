@@ -1,4 +1,4 @@
-package com.github.hackatum;
+package com.github.hackatum.Optimo;
 
 import ca.aqtech.mctreesearch4j.GenericSolver;
 
@@ -11,6 +11,7 @@ public class OptimoGenerator {
     List<String> articleClasses;
     Double weightMax;
     Double priceMax;
+
     public OptimoGenerator(List<String> articleClassesInput, double weightMaxInput, double priceMaxInput) {
         articleClasses = articleClassesInput;
         weightMax = weightMaxInput;
@@ -37,9 +38,9 @@ public class OptimoGenerator {
         System.out.println("-------");
 
         String[] stdoutStr = boas.toString().split("\n");
-        System.out.println(stdoutStr[stdoutStr.length-2]);
+        System.out.println(stdoutStr[stdoutStr.length - 2]);
 
-        String outputStr = stdoutStr[stdoutStr.length-2];
+        String outputStr = stdoutStr[stdoutStr.length - 2];
     }
 
 

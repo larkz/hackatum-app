@@ -1,13 +1,14 @@
-package com.github.hackatum;
+package com.github.hackatum.Optimo;
+
+import au.com.bytecode.opencsv.CSVReader;
 import ca.aqtech.mctreesearch4j.MDP;
 
 import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collection;
-import java.io.FileReader;
-import au.com.bytecode.opencsv.CSVReader;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 
 // <OptimoState, OptimoAction>
@@ -16,7 +17,7 @@ public class OptimoMDP extends MDP<OptimoState, OptimoAction> {
     List<List<String>> foodData;
     List<String> articleClassList;
     List<OptimoAction> possibleActions;
-    List<OptimoAction>  possibleActionsStatic;
+    List<OptimoAction> possibleActionsStatic;
     List<List<String>> goalFoodData;
     Double weightMax;
     Double priceMax;
@@ -32,10 +33,10 @@ public class OptimoMDP extends MDP<OptimoState, OptimoAction> {
 
         for (int i = 0; i < foodData.size(); i++) {
             String articleClass = foodData.get(i).get(1);
-            if ( articleClassList.contains(articleClass )  ) {
+            if (articleClassList.contains(articleClass)) {
                 List<String> filterList = foodData.get(i);
-                goalFoodData.add( filterList );
-                possibleActions.add( new OptimoAction(foodData.get(i).get(2) ) );
+                goalFoodData.add(filterList);
+                possibleActions.add(new OptimoAction(foodData.get(i).get(2)));
                 // System.out.println(foodData.get(i).get(2));
             }
         }
@@ -45,15 +46,15 @@ public class OptimoMDP extends MDP<OptimoState, OptimoAction> {
 
     public void printIO() {
         System.out.println("Optimo MDP");
-        System.out.println(System.getProperty("user.dir") + "/python/data/sim_food.csv" );
+        System.out.println(System.getProperty("user.dir") + "/python/data/sim_food.csv");
         System.out.println(articleClassList);
     }
 
     public void ingestGrocerySim() throws FileNotFoundException, IOException {
 
-        String filePath = System.getProperty("user.dir") + "/python/data/sim_food.csv" ;
+        String filePath = System.getProperty("user.dir") + "/python/data/sim_food.csv";
         FileReader fr = new FileReader(filePath);
-        CSVReader reader = new CSVReader(fr, ',' , '"' , 1);
+        CSVReader reader = new CSVReader(fr, ',', '"', 1);
 
         List<List<String>> ingestedData = new ArrayList<>();
 
@@ -62,8 +63,8 @@ public class OptimoMDP extends MDP<OptimoState, OptimoAction> {
         while ((nextLine = reader.readNext()) != null) {
             if (nextLine != null) {
                 //Verifying the read data here
-                String commaSepString = Arrays.toString( nextLine).replace("[","").replace("]","").replace(" ","");
-                ingestedData.add( Arrays.asList(commaSepString.split(",")));
+                String commaSepString = Arrays.toString(nextLine).replace("[", "").replace("]", "").replace(" ", "");
+                ingestedData.add(Arrays.asList(commaSepString.split(",")));
             }
         }
         foodData = ingestedData;
@@ -80,7 +81,7 @@ public class OptimoMDP extends MDP<OptimoState, OptimoAction> {
 
             for (int i = 0; i < goalFoodData.size(); i++) {
                 List<String> foodData = goalFoodData.get(i);
-                if (action.article == foodData.get(2) ){
+                if (action.article == foodData.get(2)) {
                     weightDelta = Double.parseDouble(foodData.get(3));
                     priceDelta = Double.parseDouble(foodData.get(4));
                     caloriesDelta = Double.parseDouble(foodData.get(5));
@@ -105,7 +106,7 @@ public class OptimoMDP extends MDP<OptimoState, OptimoAction> {
 
     @Override
     public double reward(OptimoState previousState, OptimoAction action, OptimoState state) {
-        return - state.co2;
+        return -state.co2;
     }
 
     @Override
@@ -119,7 +120,7 @@ public class OptimoMDP extends MDP<OptimoState, OptimoAction> {
     public boolean isTerminal(OptimoState state) {
         if (possibleActions.size() == 0) {
             return true;
-        } else if (state.weight <= weightMax || state.price <= priceMax){
+        } else if (state.weight <= weightMax || state.price <= priceMax) {
             return false;
         } else {
             return true;
