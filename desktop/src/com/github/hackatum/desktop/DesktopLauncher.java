@@ -9,6 +9,7 @@ public class DesktopLauncher {
     public static void main(String[] arg) {
         LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
 //        config.title = "Óptimo";
+        config.resizable = false;
         config.width = 1088;
         config.height = 459;
         new LwjglApplication(new Optimo(), config);
