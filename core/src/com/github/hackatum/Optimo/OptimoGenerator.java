@@ -18,7 +18,6 @@ public class OptimoGenerator {
     }
 
     public String run() throws IOException {
-        List<String> articleClassListInput = Arrays.asList("Barley", "Apples");
         OptimoMDP OM = new OptimoMDP(articleClasses, weightMax, priceMax);
         // OM.printIO();
         OM.ingestGrocerySim();
@@ -37,9 +36,11 @@ public class OptimoGenerator {
         System.out.println("-------");
 
         String[] stdoutStr = boas.toString().split("\n");
-        System.out.println(stdoutStr[stdoutStr.length - 2]);
 
         String outputStr = stdoutStr[stdoutStr.length - 2];
+
+        solver.displayTree(29);
+        System.out.println(stdoutStr[stdoutStr.length - 2]);
         return outputStr;
     }
 

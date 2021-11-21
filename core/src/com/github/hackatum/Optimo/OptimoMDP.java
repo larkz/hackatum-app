@@ -55,6 +55,8 @@ public class OptimoMDP extends MDP<OptimoState, OptimoAction> {
     public void ingestGrocerySim() throws FileNotFoundException, IOException {
 
         String filePath = Paths.get(System.getProperty("user.dir"), "..", "..", "python", "data", "sim_food.csv").toString();
+        System.out.println(filePath);
+
         FileReader fr = new FileReader(filePath);
         CSVReader reader = new CSVReader(fr, ',', '"', 1);
 
