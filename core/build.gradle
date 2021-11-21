@@ -4,3 +4,8 @@ sourceCompatibility = 1.7
 sourceSets.main.java.srcDirs = [ "src/" ]
 
 eclipse.project.name = appName + "-core"
+
+dependencies {
+    implementation( "ca.aqtech:mctreesearch4j:0.0.4-dev")
+    implementation("net.sf.opencsv:opencsv:2.3")
+}
