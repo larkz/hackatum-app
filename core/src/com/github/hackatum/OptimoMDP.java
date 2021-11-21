@@ -1,15 +1,12 @@
 package com.github.hackatum;
 import ca.aqtech.mctreesearch4j.MDP;
-import com.sun.org.apache.xpath.internal.operations.Bool;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.io.FileReader;
-import java.io.File;
 import au.com.bytecode.opencsv.CSVReader;
-import java.util.Arrays;
 import java.util.Arrays;
 import java.util.List;
 
