@@ -14,4 +14,11 @@ public class OptimoState {
         health = healthInput;
         co2 = co2Input;
     }
+
+    @Override
+    public String toString() {
+        return "w|" + weight + " p|" + price + " c|" + calories + " h|" + health + " co2|" + co2;
+    }
+
+
 }

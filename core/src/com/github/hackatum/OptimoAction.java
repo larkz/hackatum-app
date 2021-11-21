@@ -5,4 +5,9 @@ public class OptimoAction {
     public OptimoAction(String articleInput) {
         article = articleInput;
     }
+
+    @Override
+    public String toString() {
+        return article;
+    }
 }
