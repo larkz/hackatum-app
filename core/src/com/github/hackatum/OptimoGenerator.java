@@ -8,11 +8,18 @@ import java.util.List;
 
 public class OptimoGenerator {
 
-
+    List<String> articleClasses;
+    Double weightMax;
+    Double priceMax;
+    public OptimoGenerator(List<String> articleClassesInput, double weightMaxInput, double priceMaxInput) {
+        articleClasses = articleClassesInput;
+        weightMax = weightMaxInput;
+        priceMax = priceMaxInput;
+    }
 
     public void run() throws IOException {
         List<String> articleClassListInput = Arrays.asList("Barley", "Apples");
-        OptimoMDP OM = new OptimoMDP(articleClassListInput, 500.0, 30000.0);
+        OptimoMDP OM = new OptimoMDP(articleClasses, weightMax, priceMax);
         // OM.printIO();
         OM.ingestGrocerySim();
         OM.initialState();
@@ -25,7 +32,7 @@ public class OptimoGenerator {
         PrintStream old = System.out;
         System.setOut(PS);
 
-        solver.runTreeSearch(4);
+        solver.runTreeSearch(99);
         System.setOut(new PrintStream(new FileOutputStream(FileDescriptor.out)));
         System.out.println("-------");
 

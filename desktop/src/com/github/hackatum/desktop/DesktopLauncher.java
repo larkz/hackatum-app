@@ -13,10 +13,8 @@ import java.util.List;
 
 public class DesktopLauncher {
 	public static void main (String[] arg) throws IOException {
-		OptimoGenerator og = new OptimoGenerator();
+		OptimoGenerator og = new OptimoGenerator(Arrays.asList("Barley", "Apples", "Bananas"),500.0, 30000.0);
 		og.run();
-
-
 
 		// LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
 		// new LwjglApplication(new Optimo(), config);
